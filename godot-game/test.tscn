@@ -1,0 +1,51 @@
+[gd_scene load_steps=3 format=3 uid="uid://dci608do6y8lo"]
+
+[ext_resource type="Script" path="res://test_cmd_script.gd" id="1_lucx8"]
+
+[sub_resource type="CanvasTexture" id="CanvasTexture_5i5mo"]
+specular_color = Color(0, 0, 0, 1)
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Simple_terminal" type="Node" parent="."]
+
+[node name="TextEdit" type="TextEdit" parent="Simple_terminal"]
+z_index = 1
+offset_left = 1.0
+offset_top = 149.0
+offset_right = 295.0
+offset_bottom = 176.0
+placeholder_text = "command here"
+
+[node name="Label" type="Label" parent="Simple_terminal"]
+z_index = 1
+anchors_preset = -1
+anchor_left = 0.158
+anchor_top = 0.019
+anchor_right = 0.308
+anchor_bottom = 0.134
+offset_left = -182.016
+offset_top = -2.312
+offset_right = 44.184
+offset_bottom = 58.168
+text = "output here"
+script = ExtResource("1_lucx8")
+
+[node name="Button" type="Button" parent="Simple_terminal"]
+z_index = 1
+anchors_preset = -1
+anchor_right = 0.098
+anchor_bottom = 0.122
+offset_left = 311.0
+offset_top = 148.0
+offset_right = 283.104
+offset_bottom = 99.944
+text = "send here"
+
+[node name="Background" type="Sprite2D" parent="Simple_terminal"]
+modulate = Color(0, 0, 0, 1)
+position = Vector2(204, 91.75)
+scale = Vector2(430, 184.5)
+texture = SubResource("CanvasTexture_5i5mo")
+
+[connection signal="pressed" from="Simple_terminal/Button" to="Simple_terminal/Label" method="_send"]
