@@ -1,1 +1,3 @@
-vrm/dgame.qcow
+vrm/*.qcow
+vrm/*.qcow2
+vrm/*.iso

@@ -1,13 +1,14 @@
-extends Label
-var input_field: TextEdit
+extends Node
+
+# The URL we will connect to.
 @export var websocket_url = "ws://localhost:8765/ws"
+
+# Our WebSocketClient instance.
 var socket = WebSocketPeer.new()
 
-
-# Called when the node enters the scene tree for the first time.
-func _ready() -> void:
-	input_field = get_node(^"../TextEdit")
-		# Initiate connection to the given URL.
+func _ready():
+	print("123")
+	# Initiate connection to the given URL.
 	var err = socket.connect_to_url(websocket_url)
 	print(err, OK)
 	if err != OK:
@@ -18,12 +19,10 @@ func _ready() -> void:
 		await get_tree().create_timer(2).timeout
 
 		# Send data.
-		socket.send_text("Init")
+		socket.send_text("Test packet")
 
-
-# Called every frame. 'delta' is the elapsed time since the previous frame.
-func _process(delta: float) -> void:
-		# Call this in _process or _physics_process. Data transfer and state updates
+func _process(_delta):
+	# Call this in _process or _physics_process. Data transfer and state updates
 	# will only happen when calling this function.
 	socket.poll()
 
@@ -35,9 +34,7 @@ func _process(delta: float) -> void:
 	if state == WebSocketPeer.STATE_OPEN:
 		#socket.send_text("Test packet")
 		while socket.get_available_packet_count():
-			var data = socket.get_packet().get_string_from_utf8()
-			if data.length() > 0:
-				self.text = data
+			print("Got data from server: ", socket.get_packet().get_string_from_utf8())
 
 	# WebSocketPeer.STATE_CLOSING means the socket is closing.
 	# It is important to keep polling for a clean close.
@@ -51,6 +48,3 @@ func _process(delta: float) -> void:
 		var code = socket.get_close_code()
 		print("WebSocket closed with code: %d. Clean: %s" % [code, code != -1])
 		set_process(false) # Stop processing.
-
-func _send() -> void:
-	socket.send_text(input_field.text)
