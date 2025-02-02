@@ -30,7 +30,7 @@ offset_left = -182.016
 offset_top = -2.312
 offset_right = 44.184
 offset_bottom = 58.168
-text = "output here"
+text = "Terminal initialising..."
 script = ExtResource("1_lucx8")
 
 [node name="Button" type="Button" parent="Simple_terminal"]
